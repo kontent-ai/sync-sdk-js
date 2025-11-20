@@ -1,4 +1,4 @@
-import { type HttpResponse, type JsonValue, getDefaultHttpService } from "@kontent-ai/core-sdk";
+import { getDefaultHttpService, type HttpResponse, type JsonValue } from "@kontent-ai/core-sdk";
 import type { ResultOfSuccessfulQuery } from "../../lib/models/core.models.js";
 import type { SyncClient, SyncClientTypes, SyncQuery } from "../../lib/public_api.js";
 import { getIntegrationTestConfig } from "../integration-tests.config.js";
@@ -232,7 +232,10 @@ function waitAsync(ms: number): Promise<void> {
 async function deleteEntityAndWaitUntilPropagatedToDeliveryApiAsync({
 	deleteUrl,
 	deliveryGetUrl,
-}: { readonly deleteUrl: string; readonly deliveryGetUrl: string }): Promise<void> {
+}: {
+	readonly deleteUrl: string;
+	readonly deliveryGetUrl: string;
+}): Promise<void> {
 	await skip404ErrorsAsync(async () => {
 		return await httpService.requestAsync<SharedEntityData, null>({
 			url: deleteUrl,

@@ -1,4 +1,4 @@
-import { type CommonHeaderNames, type Header, getDefaultHttpAdapter, getDefaultHttpService } from "@kontent-ai/core-sdk";
+import { type CommonHeaderNames, getDefaultHttpAdapter, getDefaultHttpService, type Header } from "@kontent-ai/core-sdk";
 import { getFetchJsonMock } from "@kontent-ai/core-sdk/testkit";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { SyncHeaderNames } from "../../../lib/models/core.models.js";

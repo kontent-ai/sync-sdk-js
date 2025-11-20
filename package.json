@@ -9,7 +9,13 @@
 	"author": "richard sustek",
 	"license": "MIT",
 	"description": "Sync API v2 for Kontent.ai",
-	"keywords": ["Kontent.ai", "Kontent AI", "Kontent SDK Sync API", "Sync API v2", "Sync API"],
+	"keywords": [
+		"Kontent.ai",
+		"Kontent AI",
+		"Kontent SDK Sync API",
+		"Sync API v2",
+		"Sync API"
+	],
 	"engines": {
 		"node": ">= 22"
 	},
@@ -32,19 +38,19 @@
 	},
 	"dependencies": {
 		"@kontent-ai/core-sdk": "11.0.2",
-		"zod": "3.25.67"
+		"zod": "4.1.12"
 	},
 	"devDependencies": {
-		"@kontent-ai/biome-config": "0.4.0",
-		"@kontent-ai/eslint-config": "2.0.1",
-		"@typescript-eslint/eslint-plugin": "8.34.1",
-		"eslint": "9.29.0",
-		"@biomejs/biome": "1.9.4",
-		"@types/node": "24.0.3",
-		"chalk": "5.4.1",
-		"typescript": "5.8.3",
-		"vitest": "3.2.4",
-		"dotenv-cli": "8.0.0",
-		"tsx": "4.20.3"
+		"@kontent-ai/biome-config": "0.5.1",
+		"@kontent-ai/eslint-config": "2.1.0",
+		"@typescript-eslint/eslint-plugin": "8.47.0",
+		"eslint": "9.39.1",
+		"@biomejs/biome": "2.3.6",
+		"@types/node": "24.10.1",
+		"chalk": "5.6.2",
+		"typescript": "5.9.3",
+		"vitest": "4.0.10",
+		"dotenv-cli": "11.0.0",
+		"tsx": "4.20.6"
 	}
 }

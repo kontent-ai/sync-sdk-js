@@ -17,7 +17,11 @@ export function getEndpointUrl({
 	environmentId,
 	path,
 	baseUrl,
-}: { readonly environmentId: string; readonly path: string; readonly baseUrl: string }): string {
+}: {
+	readonly environmentId: string;
+	readonly path: string;
+	readonly baseUrl: string;
+}): string {
 	return removeDuplicateSlashes(`${baseUrl}/${environmentId}/${path}`);
 }
 

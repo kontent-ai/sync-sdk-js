@@ -1,7 +1,7 @@
 import { getDefaultHttpService } from "@kontent-ai/core-sdk";
 import { describe, expect, it } from "vitest";
 import type { SyncHeaderNames } from "../../../lib/models/core.models.js";
-import { type SyncClientTypes, type SyncQueryPayload, getSyncClient } from "../../../lib/public_api.js";
+import { getSyncClient, type SyncClientTypes, type SyncQueryPayload } from "../../../lib/public_api.js";
 
 describe("Paging with 'toAllPromise'", async () => {
 	const tokens: readonly string[] = ["a", "b", "c", "d", "e"];
@@ -17,7 +17,7 @@ describe("Paging with 'toAllPromise'", async () => {
 					throw new Error("Continuation must be provided in all request headers");
 				}
 
-				const tokenIndex = tokens.findIndex((token) => token === continuationToken);
+				const tokenIndex = tokens.indexOf(continuationToken);
 				const nextTokenIndex = tokenIndex + 1;
 				const nextToken = tokens.length > nextTokenIndex ? tokens[nextTokenIndex] : undefined;
 

@@ -12,14 +12,12 @@ export type {
 	SyncSdkErrorReason,
 } from "./models/core.models.js";
 export type { QueryResult } from "./models/utility-models.js";
-
-/**
- * Sync response models
- */
-export type * from "./schemas/synchronization.models.js";
-
 /*
  * Queries
  */
 export type { InitQuery, InitQueryPayload } from "./queries/init-query.js";
 export type { SyncQuery, SyncQueryPayload } from "./queries/sync-query.js";
+/**
+ * Sync response models
+ */
+export type * from "./schemas/synchronization.models.js";

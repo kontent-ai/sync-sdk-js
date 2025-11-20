@@ -1,11 +1,11 @@
 import {
 	type CommonHeaderNames,
 	type EmptyObject,
+	getDefaultHttpService,
+	getSdkIdHeader,
 	type Header,
 	type HttpService,
 	type JsonValue,
-	getDefaultHttpService,
-	getSdkIdHeader,
 } from "@kontent-ai/core-sdk";
 import type { ZodError, ZodType } from "zod/v4";
 import type { PagingQuery, Query, SuccessfulHttpResponse, SyncClientConfig, SyncHeaderNames, SyncResponse } from "../models/core.models.js";

@@ -16,13 +16,7 @@ export function getIntegrationTestConfig() {
 			path: `/items/codename/${itemCodename}/variants/codename/${languageCodename}`,
 		});
 
-	const getMapiEndpointUrl = ({
-		environmentId,
-		path,
-	}: {
-		readonly environmentId: string;
-		readonly path: string;
-	}): string => {
+	const getMapiEndpointUrl = ({ environmentId, path }: { readonly environmentId: string; readonly path: string }): string => {
 		return getEndpointUrl({
 			environmentId,
 			path,
@@ -30,13 +24,7 @@ export function getIntegrationTestConfig() {
 		});
 	};
 
-	const getDeliveryEndpointUrl = ({
-		environmentId,
-		path,
-	}: {
-		readonly environmentId: string;
-		readonly path: string;
-	}): string => {
+	const getDeliveryEndpointUrl = ({ environmentId, path }: { readonly environmentId: string; readonly path: string }): string => {
 		return getEndpointUrl({
 			environmentId,
 			path,

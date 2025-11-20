@@ -36,7 +36,7 @@ describe("Sync query", async () => {
 
 	await processChangesForIntegrationTestAsync(syncData);
 
-	const validateSyncResponseAndObjectAsync = async ({
+	const validateSyncResponseAndObjectAsync = ({
 		success,
 		schema,
 		deltaObject,

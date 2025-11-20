@@ -1,7 +1,7 @@
-import { type HttpService, type JsonValue, getDefaultHttpService } from "@kontent-ai/core-sdk";
+import { getDefaultHttpService, type HttpService, type JsonValue } from "@kontent-ai/core-sdk";
 import { describe, test } from "vitest";
 import { ZodError } from "zod/v4";
-import { type InitQueryPayload, type SyncSdkErrorReason, getSyncClient } from "../../../lib/public_api.js";
+import { getSyncClient, type InitQueryPayload, type SyncSdkErrorReason } from "../../../lib/public_api.js";
 import { fakeXContinuationTokenHeader } from "../../utils/test.utils.js";
 
 describe("Response validation", () => {
@@ -59,7 +59,7 @@ function getHttpServiceWithJsonResponse(fakeResponse: JsonValue): HttpService {
 	return getDefaultHttpService({
 		adapter: {
 			requestAsync: async () => {
-				return {
+				return await Promise.resolve({
 					responseHeaders: [fakeXContinuationTokenHeader],
 					status: 200,
 					statusText: "Ok",
@@ -68,7 +68,7 @@ function getHttpServiceWithJsonResponse(fakeResponse: JsonValue): HttpService {
 					toBlobAsync: () => {
 						throw new Error("Not implemented");
 					},
-				};
+				});
 			},
 		},
 	});

@@ -1,6 +1,6 @@
 import { getDefaultHttpService } from "@kontent-ai/core-sdk";
 import { describe, expect, it } from "vitest";
-import { type SyncSdkErrorReason, getSyncClient } from "../../../lib/public_api.js";
+import { getSyncClient, type SyncSdkErrorReason } from "../../../lib/public_api.js";
 
 describe("Retry strategy config", async () => {
 	const maxRetries = 7;
