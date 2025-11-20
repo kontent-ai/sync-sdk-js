@@ -40,7 +40,7 @@ A JavaScript SDK for interacting with the [Kontent.ai Sync API v2](https://konte
 ## Installation
 
 ```bash
-npm install @kontent-ai/sync-sdk-js
+npm install @kontent-ai/sync-sdk
 ```
 
 ## Configuration
@@ -82,7 +82,7 @@ const client = getSyncClient("your-environment-id")
 #### Initializing Synchronization
 
 ```typescript
-import { getSyncClient } from '@kontent-ai/sync-sdk-js';
+import { getSyncClient } from '@kontent-ai/sync-sdk';
 
 // Create a client with public API access
 const client = getSyncClient('your-environment-id')
