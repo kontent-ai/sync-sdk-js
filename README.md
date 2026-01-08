@@ -59,6 +59,9 @@ The SDK uses a fluent API for client initialization, starting with the `getSyncC
 These options can be set in the `create` function:
 
 ```typescript
+import { getSyncClient } from '@kontent-ai/sync-sdk';
+import { getDefaultHttpService } from "@kontent-ai/core-sdk";
+
 const client = getSyncClient("your-environment-id")
   .publicApi()
   .create({
