@@ -228,7 +228,7 @@ The SDK provides detailed error information when operations fail:
 const { success, error } = await client.init().toPromise();
 
 if (!success) {
-  switch (error.reason) {
+  switch (error.details.reason) {
     case 'validationFailed':
       // Handle validation errors when response doesn't match expected schema
       console.error('Validation error:', error.details.zodError);
