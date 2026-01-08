@@ -1,7 +1,12 @@
-import { getDefaultHttpAdapter, getDefaultHttpService, getSdkIdHeader, type Header } from "@kontent-ai/core-sdk";
+import {
+	type ContinuationHeaderName,
+	getDefaultHttpAdapter,
+	getDefaultHttpService,
+	getSdkIdHeader,
+	type Header,
+} from "@kontent-ai/core-sdk";
 import { getFetchJsonMock } from "@kontent-ai/core-sdk/testkit";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { SyncHeaderNames } from "../../../lib/models/core.models.js";
 import { getSyncClient } from "../../../lib/public_api.js";
 
 describe("Sync tracking header", async () => {
@@ -20,7 +25,7 @@ describe("Sync tracking header", async () => {
 		status: 200,
 		responseHeaders: [
 			{
-				name: "X-Continuation" satisfies SyncHeaderNames,
+				name: "X-Continuation" satisfies ContinuationHeaderName,
 				value: "x",
 			},
 		],

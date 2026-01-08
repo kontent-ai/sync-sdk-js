@@ -1,6 +1,5 @@
-import { getDefaultHttpService } from "@kontent-ai/core-sdk";
+import { type ContinuationHeaderName, getDefaultHttpService } from "@kontent-ai/core-sdk";
 import { describe, expect, it } from "vitest";
-import type { SyncHeaderNames } from "../../../lib/models/core.models.js";
 import { getSyncClient, type SyncClientTypes, type SyncQueryPayload } from "../../../lib/public_api.js";
 
 describe("Paging with 'toAllPromise'", async () => {
@@ -10,7 +9,7 @@ describe("Paging with 'toAllPromise'", async () => {
 		adapter: {
 			requestAsync: async (data) => {
 				const continuationToken = data.requestHeaders?.find(
-					(header) => header.name.toLowerCase() === ("X-Continuation" satisfies SyncHeaderNames).toLowerCase(),
+					(header) => header.name.toLowerCase() === ("X-Continuation" satisfies ContinuationHeaderName).toLowerCase(),
 				)?.value;
 
 				if (!continuationToken) {
@@ -25,7 +24,7 @@ describe("Paging with 'toAllPromise'", async () => {
 					isValidResponse: true,
 					responseHeaders: [
 						{
-							name: "X-Continuation" satisfies SyncHeaderNames,
+							name: "X-Continuation" satisfies ContinuationHeaderName,
 							// use next token if available, otherwise use the current token
 							value: nextToken ? nextToken : continuationToken,
 						},

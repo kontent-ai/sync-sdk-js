@@ -231,15 +231,15 @@ if (!success) {
   switch (error.reason) {
     case 'validationFailed':
       // Handle validation errors when response doesn't match expected schema
-      console.error('Validation error:', error.zodError);
+      console.error('Validation error:', error.details.zodError);
       break;
     case 'invalidResponse':
       // Handle invalid response errors (e.g., 401 response)
-      console.error('Invalid response:', error.status, error.statusText);
+      console.error('Invalid response:', error.details.status, error.details.statusText);
       break;
     case 'noResponses':
       // Handle case when no responses were received
-      console.error('No responses received from:', error.url);
+      console.error('No responses received from:', error.details.url);
       break;
     case 'invalidBody':
       // Handle invalid request body errors

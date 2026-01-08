@@ -1,5 +1,4 @@
-import { getDefaultHttpService, type HttpResponse, type JsonValue } from "@kontent-ai/core-sdk";
-import type { ResultOfSuccessfulQuery } from "../../lib/models/core.models.js";
+import { getDefaultHttpService, type HttpResponse, type JsonValue, type ResultOfSuccessfulQuery } from "@kontent-ai/core-sdk";
 import type { SyncClient, SyncClientTypes, SyncQuery } from "../../lib/public_api.js";
 import { getIntegrationTestConfig } from "../integration-tests.config.js";
 
@@ -71,12 +70,11 @@ export async function processChangesForIntegrationTestAsync({
 	readonly language: SharedEntityData;
 	readonly taxonomy: SharedEntityData;
 }): Promise<void> {
-	await createContentTypeAsync(type, element);
-	await Promise.all([
-		createTaxonomyAsync(taxonomy),
-		renameLanguageAsync(language),
-		createContentItemAndVariantAsync(item, type, language, element),
-	]);
+	// first prepare the environment by creating the content type, taxonomy and renaming the language
+	await Promise.all([createContentTypeAsync(type, element), createTaxonomyAsync(taxonomy), renameLanguageAsync(language)]);
+
+	// then create the content item and variant
+	await createContentItemAndVariantAsync(item, type, language, element);
 }
 
 export async function pollSyncApiAsync<T>({
@@ -115,7 +113,7 @@ export async function pollSyncApiAsync<T>({
 		return {
 			success: true,
 			deltaObject: data,
-			syncResponse: syncResponse,
+			syncResponse,
 		};
 	}
 
@@ -162,11 +160,12 @@ export async function waitUntilDeliveryEntityIsDeletedAsync({
 		});
 	}
 
-	if (error.reason === "notFound") {
+	if (error.details.reason === "notFound") {
 		// if entity is not found, it means it has been deleted and the change propagation is complete
 		return;
 	}
-	throw new Error(`Failed to wait until entity is deleted: ${fetchEntityUrl}`);
+
+	throw new Error(`Failed to wait until entity is deleted: ${fetchEntityUrl}`, { cause: error });
 }
 
 async function renameLanguageAsync(language: SharedEntityData): Promise<void> {
@@ -306,9 +305,13 @@ async function skip404ErrorsAsync<T extends JsonValue>(fn: () => Promise<HttpRes
 		return response.data;
 	}
 
-	if (error.reason === "notFound") {
+	if (error.details.reason === "notFound") {
 		return undefined;
 	}
 
-	throw new Error("Failed to skip 404 errors", { cause: error });
+	if (error.details.reason === "invalidResponse" && error.details.status === 401) {
+		throw new Error(`${error.message} ${error.details.kontentErrorResponse?.message}`, { cause: error });
+	}
+
+	throw new Error(`Failed to skip 404 errors. ${error.message}`, { cause: error });
 }

@@ -1,7 +1,7 @@
-import { getDefaultHttpService, type HttpService, type JsonValue } from "@kontent-ai/core-sdk";
+import { type ErrorReason, getDefaultHttpService, type HttpService, type JsonValue } from "@kontent-ai/core-sdk";
 import { describe, test } from "vitest";
-import { ZodError } from "zod/v4";
-import { getSyncClient, type InitQueryPayload, type SyncSdkErrorReason } from "../../../lib/public_api.js";
+import { ZodError } from "zod";
+import { getSyncClient, type InitQueryPayload } from "../../../lib/public_api.js";
 import { fakeXContinuationTokenHeader } from "../../utils/test.utils.js";
 
 describe("Response validation", () => {
@@ -20,15 +20,15 @@ describe("Response validation", () => {
 
 		expect(success).toBe(false);
 		expect(error).toBeDefined();
-		expect(error?.reason).toStrictEqual<SyncSdkErrorReason>("validationFailed");
+		expect(error?.details.reason).toStrictEqual<ErrorReason>("validationFailed");
 
-		if (error?.reason === "validationFailed") {
-			expect(error.url).toStrictEqual(query.toUrl());
-			expect(error.zodError).toBeInstanceOf(ZodError);
-			expect(error.message).toBeDefined();
-			expect(error.response).toBeDefined();
+		if (error?.details.reason === "validationFailed") {
+			expect(error.details.url).toStrictEqual(query.toUrl());
+			expect(error.details.zodError).toBeInstanceOf(ZodError);
+			expect(error.details.message).toBeDefined();
+			expect(error.details.response).toBeDefined();
 		} else {
-			throw new Error(`Unexpected error reason '${error?.reason}'`);
+			throw new Error(`Unexpected error reason '${error?.details.reason}'`);
 		}
 	});
 
