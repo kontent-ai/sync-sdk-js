@@ -107,12 +107,12 @@ export async function pollSyncApiAsync<T>({
 		throw new Error("Failed to get sync response. The request should always succeed.");
 	}
 
-	const data = await getDeltaObject(syncResponse);
+	const deltaObject = getDeltaObject(syncResponse);
 
-	if (data) {
+	if (deltaObject) {
 		return {
 			success: true,
-			deltaObject: data,
+			deltaObject,
 			syncResponse,
 		};
 	}
@@ -224,8 +224,11 @@ async function createContentTypeAsync(type: SharedEntityData, element: ElementCh
 	});
 }
 
-function waitAsync(ms: number): Promise<void> {
-	return new Promise((resolve) => setTimeout(resolve, ms));
+async function waitAsync(ms: number): Promise<void> {
+	return await new Promise((resolve) => {
+		setTimeout(resolve, ms);
+		return;
+	});
 }
 
 async function deleteEntityAndWaitUntilPropagatedToDeliveryApiAsync({

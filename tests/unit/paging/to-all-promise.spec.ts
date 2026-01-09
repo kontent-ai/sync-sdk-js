@@ -26,7 +26,7 @@ describe("Paging with 'toAllPromise'", async () => {
 						{
 							name: "X-Continuation" satisfies ContinuationHeaderName,
 							// use next token if available, otherwise use the current token
-							value: nextToken ? nextToken : continuationToken,
+							value: nextToken ?? continuationToken,
 						},
 					],
 					status: 200,

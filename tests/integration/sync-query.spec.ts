@@ -37,7 +37,7 @@ describe("Sync query", async () => {
 
 	await processChangesForIntegrationTestAsync(syncData);
 
-	const validateSyncResponseAndObjectAsync = ({
+	const validateSyncResponseAndObject = ({
 		success,
 		schema,
 		deltaObject,
@@ -83,7 +83,7 @@ describe("Sync query", async () => {
 			pollWaitInMs,
 		});
 
-		await validateSyncResponseAndObjectAsync({
+		validateSyncResponseAndObject({
 			success,
 			deltaObject,
 			syncResponse,
@@ -101,7 +101,7 @@ describe("Sync query", async () => {
 			pollWaitInMs,
 		});
 
-		await validateSyncResponseAndObjectAsync({
+		validateSyncResponseAndObject({
 			success,
 			deltaObject,
 			syncResponse,
@@ -119,7 +119,7 @@ describe("Sync query", async () => {
 			pollWaitInMs,
 		});
 
-		await validateSyncResponseAndObjectAsync({
+		validateSyncResponseAndObject({
 			success,
 			deltaObject,
 			syncResponse,
@@ -137,7 +137,7 @@ describe("Sync query", async () => {
 			pollWaitInMs,
 		});
 
-		await validateSyncResponseAndObjectAsync({
+		validateSyncResponseAndObject({
 			success,
 			deltaObject,
 			syncResponse,
