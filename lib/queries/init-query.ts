@@ -1,6 +1,6 @@
-import { type ContinuationHeaderName, extractContinuationToken, getQuery, type Query } from "@kontent-ai/core-sdk";
+import { getQuery, type Query } from "@kontent-ai/core-sdk";
 import { z } from "zod";
-import type { SyncClient, SyncClientConfig, SyncClientTypes } from "../models/core.models.js";
+import { MissingContinuationTokenError, type SyncClient, type SyncClientConfig, type SyncClientTypes } from "../models/core.models.js";
 import { syncSdkInfo } from "../sync-sdk-info.js";
 import { getSyncEndpointUrl } from "../utils/url.utils.js";
 
@@ -26,20 +26,17 @@ export function getInitQuery<TSyncApiTypes extends SyncClientTypes>(
 
 	const { toPromise } = getQuery<InitQueryPayload, null, InitQueryMetadata>({
 		config,
-		url,
 		sdkInfo: syncSdkInfo,
 		authorizationApiKey: config.deliveryApiKey,
 		zodSchema: initQueryPayloadSchema,
 		continuationToken: undefined,
-		extraMetadata: (response) => {
-			const continuationToken = extractContinuationToken(response.adapterResponse.responseHeaders);
-
-			if (!continuationToken) {
-				throw new Error(`Invalid response: missing '${"X-Continuation" satisfies ContinuationHeaderName}' header`);
+		extraMetadata: (_, data) => {
+			if (!data.continuationToken) {
+				throw new MissingContinuationTokenError();
 			}
 
 			return {
-				continuationToken,
+				continuationToken: data.continuationToken,
 			};
 		},
 		request: {

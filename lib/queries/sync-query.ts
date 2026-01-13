@@ -1,13 +1,6 @@
-import {
-	type ContinuationHeaderName,
-	extractContinuationToken,
-	getPagingQuery,
-	type Override,
-	type PagingQuery,
-	type Prettify,
-} from "@kontent-ai/core-sdk";
+import { getPagingQuery, type Override, type PagingQuery, type Prettify } from "@kontent-ai/core-sdk";
 import z from "zod";
-import type { SyncClient, SyncClientConfig, SyncClientTypes } from "../models/core.models.js";
+import { MissingContinuationTokenError, type SyncClient, type SyncClientConfig, type SyncClientTypes } from "../models/core.models.js";
 import type {
 	ContentItemDeltaObject,
 	ContentTypeDeltaObject,
@@ -56,19 +49,16 @@ export function getSyncQuery<TSyncApiTypes extends SyncClientTypes>(
 
 	const { toPromise, toAllPromise } = getPagingQuery<SyncQueryPayload<TSyncApiTypes>, null, SyncQueryMetadata>({
 		config,
-		url,
 		continuationToken,
 		sdkInfo: syncSdkInfo,
 		authorizationApiKey: config.deliveryApiKey,
-		extraMetadata: (response) => {
-			const continuationToken = extractContinuationToken(response.adapterResponse.responseHeaders);
-
-			if (!continuationToken) {
-				throw new Error(`Invalid response: missing '${"X-Continuation" satisfies ContinuationHeaderName}' header`);
+		extraMetadata: (_, data) => {
+			if (!data.continuationToken) {
+				throw new MissingContinuationTokenError();
 			}
 
 			return {
-				continuationToken,
+				continuationToken: data.continuationToken,
 			};
 		},
 		canFetchNextResponse: (response) => {

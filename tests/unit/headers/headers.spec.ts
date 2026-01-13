@@ -1,11 +1,5 @@
-import {
-	type ContinuationHeaderName,
-	getDefaultHttpAdapter,
-	getDefaultHttpService,
-	getSdkIdHeader,
-	type Header,
-} from "@kontent-ai/core-sdk";
-import { getFetchJsonMock } from "@kontent-ai/core-sdk/testkit";
+import { getDefaultHttpAdapter, getDefaultHttpService, getSdkIdHeader, type Header } from "@kontent-ai/core-sdk";
+import { mockGlobalFetchJsonResponse } from "@kontent-ai/core-sdk/testkit";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { getSyncClient } from "../../../lib/public_api.js";
 
@@ -20,15 +14,10 @@ describe("Sync tracking header", async () => {
 		vi.resetAllMocks();
 	});
 
-	global.fetch = getFetchJsonMock({
-		json: {},
-		status: 200,
-		responseHeaders: [
-			{
-				name: "X-Continuation" satisfies ContinuationHeaderName,
-				value: "x",
-			},
-		],
+	mockGlobalFetchJsonResponse({
+		jsonResponse: {},
+		statusCode: 200,
+		continuationToken: "x",
 	});
 
 	let requestHeaders: readonly Header[] = [];

@@ -1,4 +1,4 @@
-import type { AdapterResponse, SdkConfig } from "@kontent-ai/core-sdk";
+import type { AdapterResponse, ContinuationHeaderName, SdkConfig } from "@kontent-ai/core-sdk";
 import type { InitQuery } from "../queries/init-query.js";
 import type { SyncQuery } from "../queries/sync-query.js";
 
@@ -71,3 +71,9 @@ export type SyncClient<TSyncApiTypes extends SyncClientTypes = SyncClientTypes> 
 };
 
 export type CreateSyncClientOptions = Omit<SyncClientConfig, "environmentId" | "apiMode" | "deliveryApiKey">;
+
+export class MissingContinuationTokenError extends Error {
+	constructor() {
+		super(`Missing '${"X-Continuation" satisfies ContinuationHeaderName}' header`);
+	}
+}
