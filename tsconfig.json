@@ -1,31 +1,44 @@
 {
 	"compileOnSave": true,
 	"compilerOptions": {
-		"noEmit": true,
+		// Language + runtime environment
 		"target": "es2022",
-		"moduleResolution": "nodenext",
+		"lib": ["esnext"],
+
+		// Modules + resolution
 		"module": "NodeNext",
-		"importHelpers": true,
-		"sourceMap": true,
-		"declaration": true,
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"allowSyntheticDefaultImports": true,
-		"strict": true,
-		"strictNullChecks": true,
-		"strictPropertyInitialization": true,
+		"moduleResolution": "nodenext",
 		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
+
+		// Emit behavior (even if `noEmit` is true, these are useful for tooling expectations)
+		"noEmit": true,
+		"declaration": true,
+		"sourceMap": true,
+		"importHelpers": true,
+
+		// Decorators
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+
+		// Strictness + type safety
+		"strict": true,
+		"alwaysStrict": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"strictPropertyInitialization": true,
+
+		// Lint-like correctness checks
 		"noImplicitReturns": true,
 		"allowUnreachableCode": false,
-		"skipLibCheck": true,
-		"alwaysStrict": true,
-		"forceConsistentCasingInFileNames": true,
-		"noUnusedParameters": true,
 		"noUnusedLocals": true,
-		"strictFunctionTypes": true,
-		"noImplicitAny": true,
-		"typeRoots": ["./node_modules/@types"],
-		"lib": ["esnext"]
+		"noUnusedParameters": true,
+		"forceConsistentCasingInFileNames": true,
+
+		// Perf / compatibility
+		"skipLibCheck": true,
+		"typeRoots": ["./node_modules/@types"]
 	},
 	"include": ["lib/**/*", "tests/**/*", "eslint.config.js", "vitest.config.ts", "sample/**/*", "scripts/**/*"],
 	"exclude": ["node_modules"]
