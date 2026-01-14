@@ -8,10 +8,7 @@ export type {
 	SyncClientTypes,
 	SyncResponse,
 	SyncResponseMeta,
-	SyncSdkError,
-	SyncSdkErrorReason,
 } from "./models/core.models.js";
-export type { QueryResult } from "./models/utility-models.js";
 /*
  * Queries
  */

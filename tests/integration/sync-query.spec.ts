@@ -1,7 +1,8 @@
+import type { ResultOfSuccessfulQuery } from "@kontent-ai/core-sdk";
 import { describe, expect, it, suite } from "vitest";
-import type { ZodType } from "zod/v4";
+import type { ZodType } from "zod";
 import { getSyncClient } from "../../lib/client/sync-client.js";
-import type { ResultOfSuccessfulQuery, SyncClientTypes } from "../../lib/models/core.models.js";
+import type { SyncClientTypes } from "../../lib/models/core.models.js";
 import { type SyncQuery, syncQueryPayloadSchema } from "../../lib/queries/sync-query.js";
 import {
 	contentItemDeltaObjectSchema,
@@ -36,7 +37,7 @@ describe("Sync query", async () => {
 
 	await processChangesForIntegrationTestAsync(syncData);
 
-	const validateSyncResponseAndObjectAsync = ({
+	const validateSyncResponseAndObject = ({
 		success,
 		schema,
 		deltaObject,
@@ -82,7 +83,7 @@ describe("Sync query", async () => {
 			pollWaitInMs,
 		});
 
-		await validateSyncResponseAndObjectAsync({
+		validateSyncResponseAndObject({
 			success,
 			deltaObject,
 			syncResponse,
@@ -100,7 +101,7 @@ describe("Sync query", async () => {
 			pollWaitInMs,
 		});
 
-		await validateSyncResponseAndObjectAsync({
+		validateSyncResponseAndObject({
 			success,
 			deltaObject,
 			syncResponse,
@@ -118,7 +119,7 @@ describe("Sync query", async () => {
 			pollWaitInMs,
 		});
 
-		await validateSyncResponseAndObjectAsync({
+		validateSyncResponseAndObject({
 			success,
 			deltaObject,
 			syncResponse,
@@ -136,7 +137,7 @@ describe("Sync query", async () => {
 			pollWaitInMs,
 		});
 
-		await validateSyncResponseAndObjectAsync({
+		validateSyncResponseAndObject({
 			success,
 			deltaObject,
 			syncResponse,

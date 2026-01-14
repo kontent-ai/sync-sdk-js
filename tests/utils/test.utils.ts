@@ -1,7 +1,6 @@
-import type { Header } from "@kontent-ai/core-sdk";
+import type { ContinuationHeaderName, Header } from "@kontent-ai/core-sdk";
 import chalk from "chalk";
 import * as dotenv from "dotenv";
-import type { SyncHeaderNames } from "../../lib/models/core.models.js";
 
 // needed to load .env environment to current process when run via package.json script
 dotenv.config();
@@ -21,6 +20,6 @@ export function getEnvironmentOptionalValue(variableName: string): string | unde
 }
 
 export const fakeXContinuationTokenHeader: Header = {
-	name: "X-Continuation" satisfies SyncHeaderNames,
+	name: "X-Continuation" satisfies ContinuationHeaderName,
 	value: "x",
 };

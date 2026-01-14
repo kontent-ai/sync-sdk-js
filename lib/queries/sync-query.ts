@@ -1,6 +1,6 @@
-import type { Override, Prettify } from "@kontent-ai/core-sdk";
-import z from "zod/v4";
-import type { PagingQuery, SyncClient, SyncClientConfig, SyncClientTypes, SyncHeaderNames } from "../models/core.models.js";
+import { getPagingQuery, type Override, type PagingQuery, type Prettify } from "@kontent-ai/core-sdk";
+import z from "zod";
+import { MissingContinuationTokenError, type SyncClient, type SyncClientConfig, type SyncClientTypes } from "../models/core.models.js";
 import type {
 	ContentItemDeltaObject,
 	ContentTypeDeltaObject,
@@ -13,7 +13,7 @@ import {
 	languageDeltaObjectSchema,
 	taxonomyDeltaObjectSchema,
 } from "../schemas/synchronization.schemas.js";
-import { extractContinuationToken, getPagingQuery } from "../utils/query.utils.js";
+import { syncSdkInfo } from "../sync-sdk-info.js";
 import { getSyncEndpointUrl } from "../utils/url.utils.js";
 
 type SyncQueryMetadata = { readonly continuationToken: string };
@@ -49,17 +49,16 @@ export function getSyncQuery<TSyncApiTypes extends SyncClientTypes>(
 
 	const { toPromise, toAllPromise } = getPagingQuery<SyncQueryPayload<TSyncApiTypes>, null, SyncQueryMetadata>({
 		config,
-		url,
 		continuationToken,
-		extraMetadata: (response) => {
-			const continuationToken = extractContinuationToken(response.adapterResponse.responseHeaders);
-
-			if (!continuationToken) {
-				throw new Error(`Invalid response: missing '${"X-Continuation" satisfies SyncHeaderNames}' header`);
+		sdkInfo: syncSdkInfo,
+		authorizationApiKey: config.deliveryApiKey,
+		extraMetadata: (_, data) => {
+			if (!data.continuationToken) {
+				throw new MissingContinuationTokenError();
 			}
 
 			return {
-				continuationToken,
+				continuationToken: data.continuationToken,
 			};
 		},
 		canFetchNextResponse: (response) => {

@@ -27,12 +27,12 @@ describe("Handling of custom errors", async () => {
 	});
 
 	it("Error should be returned as unknown", () => {
-		expect(error?.reason).toBe<ErrorReason>("unknown");
+		expect(error?.details.reason).toBe<ErrorReason>("unknown");
 	});
 
 	it("Original error should be propagated and be of proper type", () => {
-		if (error?.reason === "unknown") {
-			expect(error.originalError).toBeInstanceOf(CustomError);
+		if (error?.details.reason === "unknown") {
+			expect(error.details.originalError).toBeInstanceOf(CustomError);
 		} else {
 			throw new Error("Error should be returned as unknown");
 		}
